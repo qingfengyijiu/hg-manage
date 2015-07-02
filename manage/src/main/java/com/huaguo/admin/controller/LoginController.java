@@ -19,7 +19,7 @@ public class LoginController {
 	@RequestMapping(method={RequestMethod.POST}, value="/login")
 	public String login() {
 		
-		return "/home";
+		return "redirect:/home";
 	}
 	
 	@RequestMapping(method={RequestMethod.GET}, value="/home")

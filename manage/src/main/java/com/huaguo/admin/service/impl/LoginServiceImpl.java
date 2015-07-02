@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.huaguo.admin.model.Role;
@@ -29,10 +30,16 @@ public class LoginServiceImpl implements LoginService {
 			throws UsernameNotFoundException {
 		User user = new User();
 		user.setUsername("test");
-		user.setPassword("test");
+		String password = "test";
+		password = new BCryptPasswordEncoder().encode(password);
+		user.setPassword(password);
 		Set<Role> roles = new HashSet<Role>();
-		roles.add(new Role("test"));
+		roles.add(new Role("ROLE_TEST"));
 		user.setAuthorities(roles);
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(true);
+		user.setEnabled(true);
 		return user;
 	}
 
