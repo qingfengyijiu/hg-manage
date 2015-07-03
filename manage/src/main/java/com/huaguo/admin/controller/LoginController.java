@@ -16,12 +16,6 @@ public class LoginController {
 		return "login/login";
 	}
 	
-	@RequestMapping(method={RequestMethod.POST}, value="/login")
-	public String login() {
-		
-		return "redirect:/home";
-	}
-	
 	@RequestMapping(method={RequestMethod.GET}, value="/home")
 	public String home() {
 		return "home";

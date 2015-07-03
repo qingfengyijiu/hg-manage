@@ -109,6 +109,12 @@
 			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- SPRING TEST -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
 		
 		<!-- CACHE -->
 		<dependency>
@@ -308,10 +314,6 @@
              <id>dev</id>
              <activation>
              	  <activeByDefault>true</activeByDefault>
-                  <property>
-                        <name>env</name>
-                        <value>dev</value>
-                  </property>
              </activation>
              <properties>
                   <huaguo.url>http://124.200.1.94:12345</huaguo.url>
