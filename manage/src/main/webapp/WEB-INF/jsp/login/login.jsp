@@ -6,29 +6,55 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>登录</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/bootstrap/css/bootstrap.css'/>"/>
 </head>
-<body>
-			<button type="button" class="close" aria-label="Close"><span>&times;</span></button>
-	<address>fdsfdsf终于能够</address>
+<body style="background:gray;">
+	<div class="container">
+		<div id="loginBox" style="border-radius:8px;background:white;padding:20px;width:400px;height:260px;margin-top:200px;margin-left:auto;margin-right:auto;">
+			<form action="<c:url value='/login'/>" method="POST" class="form">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<div class="form-group text-center">
+					<p>请输入用户名和密码</p>
+				</div>
+				<div class="form-group">
+					<label for="username" class="control-label sr-only">username:</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-user"></span>
+						</span>
+						<input id="username" name="username" class="form-control" type="text"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password" class="control-label sr-only">password:</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-lock glyphicon-lg"></span>
+						</span>
+						<input id="password" name="password" class="form-control" type="password"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="登录" class="btn btn-success btn-lg btn-block" role="button"/>
+				</div>
+				<div class="form-group">
+					<div class="clearfix" style="float:right;">
+						<button id="register" role="button" class="btn btn-primary btn-sm" style="margin-left:10px;">申请成为管理员</button>
+					</div>
+				</div>
+			</form>
+			<div class="error-info-zone clearfix">
+				<div class="error-info text-center">
+					${SPRING_SECURITY_LAST_EXCEPTION.message}
+				</div>
+			</div>
+		</div>
+		
+	</div>
 	
-	<abbr title="test">test</abbr>
-	<dl class="dl-horizontal">
-	  <dt>Coffee</dt>
-	  <dd>Black hot drink</dd>
-	  <dd>Red hot drink</dd>
-	  <dt>Milk</dt>
-	  <dd>White cold drink</dd>
-	  <dd>Yellow cold drink</dd>
-	</dl>
 	
-	<form action="<c:url value='/login'/>" method="POST">
-		<label class="text-uppercase text-primary">username :</label> <input id="username" name="username"/>
-		password : <input id="password" type="password" name="password"/>
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="submit" value="submit"/>
-	</form>
-	${SPRING_SECURITY_LAST_EXCEPTION.message}
+	<script src="<c:url value='/static/js/jquery-1.10.2.js'/>"></script>
+	<script src="<c:url value='/static/bootstrap/js/bootstrap.js'/>"></script>
 </body>
 </html>
