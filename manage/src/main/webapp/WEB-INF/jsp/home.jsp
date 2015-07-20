@@ -8,30 +8,7 @@
 <title>首页</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/bootstrap/css/bootstrap.css'/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/font-awesome/css/font-awesome.css'/>"/>
-<style type="text/css">
-.nav li {
-	float:none;
-}
-nav.huaguo-nav {
-	width:100px;
-	height:100%;
-	background:lightblue;
-}
-nav.huaguo-nav ul {
-	list-style-image:none;
-	list-style-type:none;
-	padding:0;
-	font-size:18px;
-}
-nav.huaguo-nav ul ul {
-	display:none;
-	padding-left:15px;
-	font-size:16px;
-}
-nav.huaguo-nav ul ul ul {
-	font-size:14px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="<c:url value='/static/huaguo/css/nav.css'/>"/>
 </head>
 <body>
 	<div class="container" style="background:none;">
@@ -41,50 +18,50 @@ nav.huaguo-nav ul ul ul {
 				<span>花果金融</span>
 			</div>
 		</div>
-		<div id="content" style="height:600px;width:100%;border:1px solid red;">
-			<div id="content-menu" style="height:100%;">
-				<nav class="huaguo-nav">
-					<ul>
-						<li class="active"><a href="#">首页</a></li>
-						<li class="has-children">
-							<a href="#">债权管理</a><span class="arrow fa fa-chevron-right" style="font-size:14px;"></span>
-							<ul>
-								<li class="has-children">
-									<a href="#">债权管理</a>
-									<ul>
-										<li><a href="#">新建债权</a></li>
-										<li><a href="#">编辑债权</a></li>
-										<li><a href="#">查询债权</a></li>
-									</ul>
-								</li>
-								<li><a href="#">编辑债权</a></li>
-								<li><a href="#">查询债权</a></li>
-							</ul>
-						</li>
-						<li><a href="#">债权管理</a><span class="arrow fa fa-chevron-left" style="transform:rotate(90deg);font-size:14px;"></span></li>
-						<li><a href="#">债权管理</a></li>
-						<li><a href="#">债权管理</a></li>
-						<li><a href="#">债权管理</a></li>
-						<li><a href="#">债权管理</a></li>
-						<li><a href="#">债权管理</a></li>
-						<li><a href="#">债权管理</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div id="content-body">
-				
+		<div id="navbar" style="width:205px;position:relative;float:left;">
+			<nav class="huaguo-nav">
+				<ul id="navtest">
+					<li class="active"><a href="#">首页</a></li>
+				</ul>
+			</nav>
+		</div>
+			
+		<div id="content" class="helper-clearfix" style="position:relative;margin-left:205px;width:auto;margin-right:0;min-height:500px;">
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-home"></i>花果金融</a></li>
+				<li class="active">首页</li>
+			</ol>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="alert alert-info">
+							欢迎使用<strong>花果金融业务管理平台</strong>
+							<a class="close" data-dismiss="alert" href="#">x</a>
+						</div>
+						<div class="widget-box">
+							test
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">
+			<nav class="huaguo-nav">
+				<ul id="navtest"></ul>
+			</nav>
+			
+		</div>
 		<div id="userNav"></div>
 	</div>
 	<script src="<c:url value='/static/js/jquery-1.10.2.js'/>"></script>
 	<script src="<c:url value='/static/bootstrap/js/bootstrap.js'/>"></script>
+	<script src="<c:url value='/static/huaguo/nav.js'/>"></script>
 	<script type="text/javascript">
 	$(function() {
-		$(".huaguo-nav li.has-children").on("click", function() {
-			$(this).children("ul:first").show();
-		});
+		var data2 = [{title:"菜单管理", url :"<c:url value='/system/menu/'/>", children : []}];
+		var data1 = [{title:"test11", children : [], url:"http://www.baidu.com"}, {title:"test12", children : [], url:"http://www.sina.com.cn"}];
+		var data = [{title:"债权管理", children : data1, url:"#"}, {title:"系统管理", children : data2, url:"#"}];
+		$("#navtest").hgNav(data);
 	})
 	</script>
 </body>
