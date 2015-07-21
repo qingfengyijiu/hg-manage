@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huaguo.admin.dao.NewUserMapper">
+
+	<sql id="PARAM_SQL">
+		<where>
+			<if test="Param != null">
+				<if test="Param.id != null">and ID = #{Param.id}</if>
+				<if test="Param.username != null">and username = #{Param.username}</if>
+			</if>
+		</where>
+	</sql>
+
+	
+	<select id="listByParam" parameterType="map" resultType="com.huaguo.admin.model.security.User">
+		select ID
+		from NEW_S_USER 
+		<include refid="PARAM_SQL"/>
+	</select>
+	
+	<insert id="insert" parameterType="com.huaguo.admin.model.security.User">
+		insert 
+		into NEW_S_USER
+		(ID, USERNAME, PASSWORD, ACCOUNT_NON_EXPIRED, ACCOUNT_NON_LOCKED, CREDENTIALS_NON_EXPIRED, ENABLED)
+		values
+		(
+			#{id,jdbcType=VARCHAR},
+			#{username,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{accountNonExpired,jdbcType=CHAR},
+			#{accountNonLocked,jdbcType=CHAR},
+			#{credentialsNonExpired,jdbcType=CHAR},
+			#{enabled,jdbcType=CHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.huaguo.admin.model.security.User">
+		update NEW_S_USER
+		set PASSWORD=#{password}
+		where ID=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="com.huaguo.admin.model.security.User">
+		delete from NEW_S_USER where ID=#{id}
+	</delete>
+	
+</mapper>
