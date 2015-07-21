@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.huaguo.admin.model;
+package com.huaguo.admin.model.security;
 
 import java.util.Collection;
 

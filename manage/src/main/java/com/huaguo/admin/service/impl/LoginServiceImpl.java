@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.huaguo.admin.model.Role;
-import com.huaguo.admin.model.User;
+import com.huaguo.admin.model.security.Role;
+import com.huaguo.admin.model.security.User;
 import com.huaguo.admin.service.LoginService;
 
 /**

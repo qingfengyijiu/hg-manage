@@ -14,8 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
 
-import com.huaguo.admin.model.Function;
-import com.huaguo.admin.model.Role;
+import com.huaguo.admin.model.security.Function;
+import com.huaguo.admin.model.security.Role;
 
 /**
  * @author zhang jianxin
