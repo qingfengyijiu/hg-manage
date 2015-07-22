@@ -48,6 +48,7 @@ public class UserController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String userListJson = objectMapper.writeValueAsString(userList);
 		model.addAttribute("userList", userListJson);
+		model.addAttribute("pager", pager);
 		return "security/user/list";
 	}
 	
@@ -57,12 +58,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/create", method={RequestMethod.GET})
-	public String forCreate() {
+	public String forCreate(Model model) {
+		model.addAttribute("user", new User());
 		return "security/user/edit";
 	}
 	
 	@RequestMapping(value="/modify/{id}", method={RequestMethod.GET})
-	public String forModify(@PathVariable("id") String id) {
+	public String forModify(@PathVariable("id") String id, Model model) {
+		User user = new User();
+		user.setUsername("testmodify");
+		model.addAttribute("user", user);
 		return "security/user/edit";
 	}
 	
