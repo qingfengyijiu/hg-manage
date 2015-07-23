@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huaguo.admin.dao.NewMenuMapper">
+
+	<sql id="PARAM_SQL">
+		<where>
+			<if test="Param != null">
+				<if test="Param.id != null">and ID = #{Param.id}</if>
+				<if test="Param.key != null">and KEY = #{Param.key}</if>
+				<if test="Param.title != null">and TITLE = #{Param.title}</if>
+				<if test="Param.href != null">and HREF = #{Param.href}</if>
+				<if test="Param.parent != null">and PARENT_ID = #{Param.parent.id}</if>
+				<if test="Param.menuLevel != null">and MENU_LEVEL = #{Param.menuLevel}</if>
+				<if test="Param.WHERE != null">and ${Param.WHERE}</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="select" parameterType="string">
+		select * from NEW_S_MENU where id = #{id}
+	</select>
+
+	
+	<select id="listByParam" parameterType="map" resultType="com.huaguo.admin.model.system.Menu">
+		select * from NEW_S_MENU 
+		<include refid="PARAM_SQL"/>
+	</select>
+	
+	<insert id="insert" parameterType="com.huaguo.admin.model.system.Menu">
+		insert 
+		into NEW_S_MENU
+		(ID, TITLE, HREF, KEY, MENU_LEVEL, PARENT_ID)
+		values
+		(
+			#{id,jdbcType=VARCHAR},
+			#{title,jdbcType=VARCHAR},
+			#{href,jdbcType=VARCHAR},
+			#{key,jdbcType=VARCHAR},
+			#{menuLevel,jdbcType=INTEGER},
+			#{parent.id,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.huaguo.admin.model.system.Menu">
+		update NEW_S_MENU 
+		set TITLE=#{title},
+			HREF=#{href},
+			PARENT_ID=#{parent.id} 
+		where ID=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from NEW_S_MENU where ID=#{id}
+	</delete>
+	
+</mapper>

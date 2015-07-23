@@ -22,6 +22,16 @@
 			<groupId>com.huaguo</groupId>
 			<artifactId>hg-common</artifactId>
 			<version>1.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.jackson</groupId>
+					<artifactId>jackson-mapper-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.googlecode.json-simple</groupId>
+					<artifactId>json-simple</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.huaguo</groupId>
