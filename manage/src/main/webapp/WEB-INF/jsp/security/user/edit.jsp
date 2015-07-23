@@ -15,6 +15,7 @@
 	</div>
 	<div class="modal-body container-fluid">
 		<form:form modelAttribute="user"  class="form form-horizontal" method="post">
+			<form:hidden path="id"/>
 			<div class="form-group">
 				<form:label path="username" class="control-label col-sm-2">用户名</form:label>
 				<div class="col-sm-10">
@@ -70,7 +71,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<table id="userList" data-pager="userListPager" data-role="hggrid" data-height=250 data-datatype="local" data-multiselect=true data-caption="角色" data-localdata='${roleList}'>
+				<label class="control-label col-sm-2">授予角色</label>
+				<div class="col-sm-10"></div>
+			</div>
+			<div class="form-group" style="padding-left:20px;padding-right:20px;">
+				<table id="roleList" data-role="hggrid" data-height=250 data-datatype="local" data-multiselect=true data-localdata='${roleList}'>
 					<thead>
 						<tr>
 							<th data-name="id" data-index="id" data-width="60" data-sorttype="string">id</th>
@@ -86,11 +91,12 @@
 		</form:form>
 	</div>
 	<div class="modal-footer">
-		<button></button>
+		<button type="button" class="btn btn-default">取消</button>
+		<button type="button" class="btn btn-primary">确定</button>
 	</div>
-	<script src="<c:url value='/static/jqueryui/jquery-ui-1.10.4.custom.js'/>"></script>
-	<script src="<c:url value='/static/jqgrid/jquery.jqGrid.js'/>"></script>
-	<script src="<c:url value='/static/huaguo/grid.js'/>"></script>
+	<script type="text/javascript">
+		$('#roleList').hgGrid();
+	</script>
 </body>
 </html>
 

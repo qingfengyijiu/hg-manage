@@ -7,15 +7,18 @@
 		<where>
 			<if test="Param != null">
 				<if test="Param.id != null">and ID = #{Param.id}</if>
-				<if test="Param.username != null">and username = #{Param.username}</if>
+				<if test="Param.username != null">and USERNAME = #{Param.username}</if>
 			</if>
 		</where>
 	</sql>
+	
+	<select id="select" parameterType="string">
+		select * from NEW_S_USER where id = #{id}
+	</select>
 
 	
 	<select id="listByParam" parameterType="map" resultType="com.huaguo.admin.model.security.User">
-		select ID
-		from NEW_S_USER 
+		select * from NEW_S_USER 
 		<include refid="PARAM_SQL"/>
 	</select>
 	
@@ -41,7 +44,7 @@
 		where ID=#{id}
 	</update>
 	
-	<delete id="delete" parameterType="com.huaguo.admin.model.security.User">
+	<delete id="delete" parameterType="string">
 		delete from NEW_S_USER where ID=#{id}
 	</delete>
 	

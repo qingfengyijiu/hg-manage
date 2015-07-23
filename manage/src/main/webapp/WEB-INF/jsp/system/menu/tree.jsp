@@ -10,17 +10,6 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/font-awesome/css/font-awesome.css'/>"></link>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/fancytree/css/ui.fancytree.css'/>"></link>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/huaguo/css/nav.css'/>"></link>
-<style type="text/css">
-.modal-wrapper{
-      display: table;
-      height: 100%;
-      margin: 0px auto;
-}
-.modal-dialog{
-	display: table-cell;
-	vertical-align: middle;
-}
-</style>
 </head>
 <body>
 	<div class="container" style="background:none;">
@@ -75,6 +64,7 @@
 	<script src="<c:url value='/static/jqueryui/jquery-ui-1.10.4.custom.min.js'/>"></script>
 	<script src="<c:url value='/static/fancytree/jquery.fancytree-all.min.js'/>"></script>
 	<script src="<c:url value='/static/huaguo/nav.js'/>"></script>
+	<script src="<c:url value='/static/huaguo/modal.js'/>"></script>
 	<script type="text/javascript">
 	$(function() {
 		data1 = [{title:"test11", children : [], url:"http://www.baidu.com"}, {title:"test12", children : [], url:"http://www.sina.com.cn"}];
@@ -118,10 +108,7 @@
 		
 		$("#create").click(function() {
 			var activeNode = tree.fancytree("getActiveNode");
-			$("#dialog").modal({
-				show : true,
-				remote : "<c:url value='/system/menu/create'/>"
-			});
+			$.hgModal({remote : "<c:url value='/system/menu/create'/>"});
 		});
 	})
 	</script>

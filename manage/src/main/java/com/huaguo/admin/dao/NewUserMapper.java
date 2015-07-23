@@ -4,18 +4,12 @@
 package com.huaguo.admin.dao;
 
 import com.huaguo.admin.model.security.User;
-import com.huaguo.common.base.IListMapper;
+import com.huaguo.common.base.BaseMapper;
 
 /**
  * @author zhang jianxin
  * @date 2015
  */
-public interface NewUserMapper extends IListMapper {
-
+public interface NewUserMapper extends BaseMapper<User> {
 	
-	int insert(User user);
-	
-	int update(User user);
-	
-	int delete(User user);
 }

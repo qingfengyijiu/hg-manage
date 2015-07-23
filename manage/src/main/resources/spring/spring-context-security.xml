@@ -8,6 +8,8 @@
        http://www.springframework.org/schema/security/spring-security-4.0.xsd">
        
     <global-method-security secured-annotations="enabled"/>
+    
+    <http pattern="/system/**" security="none"/>
       
 	<http use-expressions="false" access-decision-manager-ref="accessDecisionManager">
 		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>

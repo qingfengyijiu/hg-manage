@@ -1,6 +1,12 @@
 $(function() {
 	$objs = $("[data-role=hggrid]");
 	$objs.each(function() {
+		$(this).hgGrid();
+	});
+})
+
+jQuery.fn.extend({
+	hgGrid : function(option) {
 		var _this = $(this),
 			url = _this.data("url"),
 			localdata = _this.data("localdata"),
@@ -95,6 +101,10 @@ $(function() {
 		gridOption.colNames = colNames;
 		gridOption.colModel = colModel;
 		
+		if(option != null) {
+			$.extend(gridOption, option);
+		}
+
 		// construct jqgrid
 		_this.jqGrid(gridOption);
 		
@@ -112,8 +122,8 @@ $(function() {
 				pagerObj = new Pager(pagerOption).render();
 			}
 		}
-	});
-})
+	}
+});
 
 
 function Pager(config) {
