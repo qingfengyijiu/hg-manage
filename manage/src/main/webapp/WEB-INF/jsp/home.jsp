@@ -21,7 +21,6 @@
 		<div id="navbar" style="width:205px;position:relative;float:left;">
 			<nav class="huaguo-nav">
 				<ul id="navtest">
-					<li class="active"><a href="#">首页</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -55,13 +54,10 @@
 	</div>
 	<script src="<c:url value='/static/js/jquery-1.10.2.js'/>"></script>
 	<script src="<c:url value='/static/bootstrap/js/bootstrap.js'/>"></script>
-	<script src="<c:url value='/static/huaguo/nav.js'/>"></script>
+	<script src="<c:url value='/static/huaguo/js/nav.js'/>"></script>
 	<script type="text/javascript">
 	$(function() {
-		var data2 = [{title:"菜单管理", url :"<c:url value='/system/menu/'/>", children : []}];
-		var data1 = [{title:"test11", children : [], url:"http://www.baidu.com"}, {title:"test12", children : [], url:"http://www.sina.com.cn"}];
-		var data = [{title:"债权管理", children : data1, url:"#"}, {title:"系统管理", children : data2, url:"#"}];
-		$("#navtest").hgNav(data);
+		$("#navtest").hgNav(${NAV_DATA}, "<%=request.getContextPath()%>");
 	})
 	</script>
 </body>

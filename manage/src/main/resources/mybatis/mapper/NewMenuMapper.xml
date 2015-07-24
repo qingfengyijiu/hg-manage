@@ -3,6 +3,11 @@
 
 <mapper namespace="com.huaguo.admin.dao.NewMenuMapper">
 
+	<resultMap type="com.huaguo.admin.model.system.Menu" id="menuResult">
+		<result property="id" column="ID" />
+		<collection property="children" select="selectChildren" column="ID" javaType="java.util.TreeSet"/>
+	</resultMap>
+
 	<sql id="PARAM_SQL">
 		<where>
 			<if test="Param != null">
@@ -17,20 +22,21 @@
 		</where>
 	</sql>
 	
-	<select id="select" parameterType="string">
+	<select id="select" parameterType="string" resultMap="menuResult">
 		select * from NEW_S_MENU where id = #{id}
 	</select>
 
 	
-	<select id="listByParam" parameterType="map" resultType="com.huaguo.admin.model.system.Menu">
+	<select id="listByParam" parameterType="map" resultMap="menuResult">
 		select * from NEW_S_MENU 
 		<include refid="PARAM_SQL"/>
+		order by KEY
 	</select>
 	
 	<insert id="insert" parameterType="com.huaguo.admin.model.system.Menu">
 		insert 
 		into NEW_S_MENU
-		(ID, TITLE, HREF, KEY, MENU_LEVEL, PARENT_ID)
+		(ID, TITLE, HREF, KEY, MENU_LEVEL, PARENT_ID, DESCRIPTION)
 		values
 		(
 			#{id,jdbcType=VARCHAR},
@@ -38,20 +44,36 @@
 			#{href,jdbcType=VARCHAR},
 			#{key,jdbcType=VARCHAR},
 			#{menuLevel,jdbcType=INTEGER},
-			#{parent.id,jdbcType=VARCHAR}
+			#{parent.id,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR}
 		)
 	</insert>
 	
 	<update id="update" parameterType="com.huaguo.admin.model.system.Menu">
 		update NEW_S_MENU 
 		set TITLE=#{title},
+			KEY=#{key},
 			HREF=#{href},
-			PARENT_ID=#{parent.id} 
+			PARENT_ID=#{parent.id},
+			MENU_LEVEL=#{menuLevel},
+			DESCRIPTION=#{description} 
 		where ID=#{id}
 	</update>
 	
 	<delete id="delete" parameterType="string">
 		delete from NEW_S_MENU where ID=#{id}
 	</delete>
+	
+	<delete id="batchDelete" parameterType="string">
+		delete from NEW_S_MENU where ID in #{ids}
+	</delete>
+	
+	<select id="selectChildren" parameterType="string" resultType="com.huaguo.admin.model.system.Menu">
+		select * from NEW_S_MENU where PARENT_ID = #{id} order by KEY
+	</select>
+	
+	<select id="selectParent" parameterType="string" resultType="com.huaguo.admin.model.system.Menu">
+		select t1.* from NEW_S_MENU t1 left join NEW_S_MENU t2 on t1.ID = t2.PARENT_ID where t2.ID = #{id}
+	</select>
 	
 </mapper>

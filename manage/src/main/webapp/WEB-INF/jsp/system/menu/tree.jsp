@@ -22,7 +22,6 @@
 		<div id="navbar" style="width:205px;position:relative;float:left;">
 			<nav class="huaguo-nav">
 				<ul id="navtest">
-					<li class="active"><a href="<c:url value='/home'/>">首页</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -37,9 +36,9 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="btngroup">
-							<button id="create" role="button" class="btn btn-primary">创建</button>
-							<button id="modify" role="button" class="btn btn-primary">修改</button>
-							<button id="delete" role="button" class="btn btn-primary">删除</button>
+							<button id="createMenuBtn" role="button" class="btn btn-primary">创建</button>
+							<button id="modifyMenuBtn" role="button" class="btn btn-primary">修改</button>
+							<button id="deleteMenuBtn" role="button" class="btn btn-primary">删除</button>
 						</div>
 						<div class="widget-box">
 							<div id="menu-tree"></div>
@@ -63,52 +62,50 @@
 	<script src="<c:url value='/static/bootstrap/js/bootstrap.js'/>"></script>
 	<script src="<c:url value='/static/jqueryui/jquery-ui-1.10.4.custom.min.js'/>"></script>
 	<script src="<c:url value='/static/fancytree/jquery.fancytree-all.min.js'/>"></script>
-	<script src="<c:url value='/static/huaguo/nav.js'/>"></script>
+	<script src="<c:url value='/static/huaguo/js/nav.js'/>"></script>
 	<script src="<c:url value='/static/huaguo/modal.js'/>"></script>
 	<script type="text/javascript">
 	$(function() {
-		data1 = [{title:"test11", children : [], url:"http://www.baidu.com"}, {title:"test12", children : [], url:"http://www.sina.com.cn"}];
-		data = [{title:"债权管理", children : data1, url:"#"}, {title:"test2", children : [], url:"#"}];
-		$("#navtest").hgNav(data);
+		$("#navtest").hgNav(${NAV_DATA}, "<%=request.getContextPath()%>");
 		var tree = $("#menu-tree").fancytree({
 			checkbox : false,
 			selectMode : 1,
-			source : [{
-				key : "2",
-				title : "债权管理",
-				href : "http://www.baidu.com",
-				folder : false,
-				lazy : false
-			}, {
-				key : "3",
-				title : "系统管理",
-				href : "#",
-				folder : true,
-				lazy : false,
-				children : [{
-					key : "3",
-					title : "菜单管理",
-					href : "<c:url value='/system/menu/'/>",
-					folder : false,
-					lazy : false
-				}]
-			}],
-			/* select : function(event, data) {
-				alert(data.node.title);
-			},
-			click : function(event, data) {
-				if(!data.node.folder) {
-					data.node.toggleSelected();
-				}
-			} */
+			source : ${menuFancyTreeJson},
 			activate : function(event, data) {
-				data.node.css({"background" : "red"});
+				
 			}
 		}); 
 		
-		$("#create").click(function() {
+		$("#createMenuBtn").click(function() {
 			var activeNode = tree.fancytree("getActiveNode");
 			$.hgModal({remote : "<c:url value='/system/menu/create'/>"});
+		});
+		$("#modifyMenuBtn").click(function() {
+			var activeNode = tree.fancytree("getActiveNode"),
+				key;
+			if(activeNode != null) {
+				key = activeNode.key;
+				$.hgModal({remote : "<c:url value='/system/menu/modify/'/>" + key});
+			} else {
+				alert("请选择要修改的菜单");
+			}
+		});
+		$("#deleteMenuBtn").click(function() {
+			var activeNode = tree.fancytree("getActiveNode"),
+				key;
+			if(activeNode != null) {
+				key = activeNode.key;
+				$.ajax({
+					url : "<c:url value='/system/menu/delete'/>",
+					type : "post",
+					data : {id : key},
+					success : function() {
+						window.location.reload(true);
+					}
+				});
+			} else {
+				alert("请选择要删除的菜单");
+			}
 		});
 	})
 	</script>

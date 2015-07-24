@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 
 
+
 import org.springframework.stereotype.Service;
 
 import com.huaguo.admin.dao.NewMenuMapper;
@@ -28,6 +29,8 @@ import com.huaguo.common.base.BaseMapper;
  */
 @Service("menuService")
 public class MenuServiceImpl extends AbstractBaseService<Menu> implements MenuService {
+	
+	private static final int TOP_LEVEL = 1;
 	
 	@Resource
 	NewMenuMapper newMenuMapper;
@@ -61,6 +64,35 @@ public class MenuServiceImpl extends AbstractBaseService<Menu> implements MenuSe
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("href", "#");
 		return this.listByParam(param);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.huaguo.admin.service.MenuService#tree()
+	 */
+	@Override
+	public TreeSet<Menu> tree() {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("menuLevel", TOP_LEVEL);
+		List<Menu> menuList = this.listByParam(param);
+		TreeSet<Menu> tree = new TreeSet<Menu>();
+		tree.addAll(menuList);
+		return tree;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.huaguo.admin.service.MenuService#batchDelete()
+	 */
+	@Override
+	public void batchDelete(String ids) {
+		this.newMenuMapper.batchDelete(ids);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.huaguo.admin.service.MenuService#selectParent(java.lang.String)
+	 */
+	@Override
+	public Menu selectParent(String childId) {
+		return this.newMenuMapper.selectParent(childId);
 	}
 
 

@@ -11,5 +11,9 @@ import com.huaguo.common.base.BaseMapper;
  * @date 2015
  */
 public interface NewMenuMapper extends BaseMapper<Menu> {
+	
+	void batchDelete(String ids);
+	
+	Menu selectParent(String id);
 
 }

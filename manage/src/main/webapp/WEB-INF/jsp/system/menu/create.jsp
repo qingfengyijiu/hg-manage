@@ -37,8 +37,18 @@
 			<div class="form-group">
 				<form:label path="parent" class="control-label col-sm-2">父菜单</form:label>
 				<div class="col-sm-10">
-					<form:select path="parent" items="${abstractMenuList}" itemLabel="title" itemValue="id">
+					<form:select path="parent" class="form-control" >
+						<option value=""></option>
+						<c:forEach items="${abstractMenuList}" var="abstractMenu">
+							<option value="${abstractMenu.id}" data-menu-level=${abstractMenu.menuLevel}>${abstractMenu.title}</option>
+						</c:forEach>
 					</form:select>
+				</div>
+			</div>
+			<div class="form-group">
+				<form:label path="description" class="control-label col-sm-2">描述</form:label>
+				<div class="col-sm-10">
+					<form:input path="description" class="form-control"/>
 				</div>
 			</div>
 		</form:form>
@@ -48,26 +58,46 @@
 		<button id="doCreateMenu" type="button" class="btn btn-primary">确定</button>
 	</div>
 	<script type="text/javascript">
+		var parentId = '${menu.parent.id}';
+		$("select#parent option").each(function() {
+			var _this = $(this);
+			if(_this.val() == parentId) {
+				_this.prop("selected", true);
+			}
+		});
 		$("#cancelCreateMenu").on("click", function() {
 			$("#dialogCloseBtn").click();
 		});
 		$("#doCreateMenu").on("click", function() {
-			var menu = {
+			var selectedParentView,
+				parentMenuLevel,
+				menuLevel,
+				menu;
+			selectedParentView = $("#parent option:selected");
+			parentMenuLevel = selectedParentView.data("menu-level");
+			if(parentMenuLevel == null || parentMenuLevel === "") {
+				menuLevel = 1;
+			} else {
+				menuLevel = Number(parentMenuLevel) + 1;
+			}
+			menu = {
 				id : $("#id").val(),
 				key : $("#key").val(),
 				title : $("#title").val(),
 				href : $("#href").val(),
-				menuLevel : $("#menuLevel").val(),
+				menuLevel : menuLevel,
+				description : $("#description").val(),
 				parent : {id : $("#parent").val()}
 			}
 			$.ajax({
 				type : "post",
 				url : "<c:url value='/system/menu/create/do'/>",
 				data : JSON.stringify(menu),
-				contentType : "application/json;charset=UTF-8",
+				contentType : "application/json",
 				dataType : "json",
 				success : function() {
 					$("#dialogCloseBtn").click();
+					window.location.reload();
 				}
 			});
 		});

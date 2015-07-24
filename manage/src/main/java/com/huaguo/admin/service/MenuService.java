@@ -14,8 +14,14 @@ import com.huaguo.common.base.IBaseService;
  * @date 2015
  */
 public interface MenuService extends IBaseService<Menu> {
+	
+	TreeSet<Menu> tree();
 
 	TreeSet<Menu> treeAll();
 	
 	List<Menu> listAbstractMenu();
+	
+	void batchDelete(String ids);
+	
+	Menu selectParent(String childId);
 }

@@ -3,16 +3,21 @@
  */
 package com.huaguo.admin.model.system;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.huaguo.common.base.BaseEntity;
+import com.huaguo.common.model.FancyTreeNode;
 
 /**
  * @author zhang jianxin
  * @date 2015
  */
 public class Menu extends BaseEntity implements Comparable<Object> {
+	
+	private static final boolean DEFAULT_EXPANDED = true;
 
 	private static final long serialVersionUID = 5272492951848406219L;
 
@@ -26,9 +31,11 @@ public class Menu extends BaseEntity implements Comparable<Object> {
 	
 	private int menuLevel;
 	
-	private Set<Menu> children = new TreeSet<Menu>();
+	private TreeSet<Menu> children = new TreeSet<Menu>();
 	
 	private Menu parent;
+	
+	private String description;
 
 	public String getId() {
 		return id;
@@ -74,7 +81,7 @@ public class Menu extends BaseEntity implements Comparable<Object> {
 		return children;
 	}
 
-	public void setChildren(Set<Menu> children) {
+	public void setChildren(TreeSet<Menu> children) {
 		this.children = children;
 	} 
 	
@@ -89,6 +96,18 @@ public class Menu extends BaseEntity implements Comparable<Object> {
 	public void setParent(Menu parent) {
 		this.parent = parent;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -101,6 +120,25 @@ public class Menu extends BaseEntity implements Comparable<Object> {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	public FancyTreeNode translate2FancyTree() {
+		FancyTreeNode node = new FancyTreeNode();
+		node.setKey(this.getId());
+		node.setHref(this.getHref());
+		boolean isFolder = this.getChildren().size() > 0;
+		node.setFolder(isFolder);
+		node.setLazy(false);
+		node.setExpanded(DEFAULT_EXPANDED);
+		node.setTitle(this.getTitle());
+		node.setTooltip(this.getDescription());
+		List<FancyTreeNode> childrenNodes = new ArrayList<FancyTreeNode>();
+		for(Menu child : this.getChildren()) {
+			FancyTreeNode temp = child.translate2FancyTree();
+			childrenNodes.add(temp);
+		}
+		node.setChildren(childrenNodes);
+		return node;
 	}
 	
 }
